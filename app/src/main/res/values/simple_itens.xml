@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="simple_items">
+        <item>Inteiro</item>
+        <item>Meia</item>
+    </array>
+</resources>

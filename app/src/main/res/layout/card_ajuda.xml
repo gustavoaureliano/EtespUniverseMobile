@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="Como fazer compras 1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_round_expand_more_24" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis dignissim ligula. Etiam auctor, nibh ac tempus semper, dolor erat tempus nunc, sit amet aliquet arcu neque sit amet risus. Morbi orci dolor, mattis quis tellus et, condimentum venenatis velit. Ut erat nisl, porta a dolor sit amet, bibendum interdum lacus. Aliquam sodales nibh nec convallis scelerisque. Aenean pulvinar mauris eget dolor tempor viverra. Phasellus porttitor ante nibh, non faucibus libero ullamcorper sed. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Suspendisse potenti. Proin vel tortor pharetra, dapibus ligula sit amet, ullamcorper magna. Nulla quis mauris ac eros sagittis accumsan ac in risus. Nullam dictum massa eu est ullamcorper, eget aliquam sapien ultricies.\n\n
+            Quisque volutpat nisi sed tortor finibus, in congue ipsum tincidunt. Donec quis gravida arcu, quis gravida sem. Proin ultrices euismod ultrices. Donec non nisi vel odio laoreet pretium. Aenean accumsan dui et eros fermentum efficitur. Donec non consectetur ligula. Donec sodales hendrerit ligula nec volutpat. Nam et fringilla velit, a consectetur urna. Suspendisse auctor, leo id dictum bibendum, neque mi commodo lectus, mattis pellentesque massa dolor accumsan elit. Curabitur blandit ut ipsum a bibendum. Nulla nisl turpis, laoreet eget odio id, bibendum pellentesque ex. In sit amet gravida ante." />
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
