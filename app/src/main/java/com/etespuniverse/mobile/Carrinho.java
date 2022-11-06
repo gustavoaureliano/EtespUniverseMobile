@@ -280,7 +280,6 @@ public class Carrinho extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Intent it = new Intent(Carrinho.this, FragmentsPage.class);
                                 it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                it.putExtra(ARG_PARAM_CLIENTE, cliente);
                                 startActivity(it);
                             }
                         })
