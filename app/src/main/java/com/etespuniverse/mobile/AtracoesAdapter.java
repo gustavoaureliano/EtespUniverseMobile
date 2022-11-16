@@ -1,11 +1,15 @@
 package com.etespuniverse.mobile;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,8 +39,10 @@ public class AtracoesAdapter extends RecyclerView.Adapter<AtracoesAdapter.Atraco
     public void onBindViewHolder(@NonNull AtracoesViewHolder holder, int position) {
         //holder.image.setImageResource(R.drawable.roda);
         //holder.lblNome.setText(holder.lblStatus.getText());
-        holder.lblNome.setText(atracoes.get(position).getNome());
-        int status = atracoes.get(position).getStatus();
+        ModelAtracao atracao = atracoes.get(position);
+        holder.image.setImageBitmap(atracao.getFoto());
+        holder.lblNome.setText(atracao.getNome());
+        int status = atracao.getStatus();
         if(status == 1) {
             holder.lblStatus.setText("Aberta");
         } else {
@@ -55,7 +61,7 @@ public class AtracoesAdapter extends RecyclerView.Adapter<AtracoesAdapter.Atraco
 
         public AtracoesViewHolder(@NonNull View itemView) {
             super(itemView);
-            //image = itemView.findViewById(R.id.cardImage);
+            image = itemView.findViewById(R.id.imgAtracao);
             lblNome = itemView.findViewById(R.id.lblNome);
             lblStatus = itemView.findViewById(R.id.lblStatus);
             itemView.setOnClickListener(this::onClick);

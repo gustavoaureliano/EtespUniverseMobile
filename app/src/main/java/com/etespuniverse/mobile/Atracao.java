@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ public class Atracao extends AppCompatActivity {
     private ProgressDialog load;
     private String apiUrl = SharedData.getApiUrl();
     private TextView lblNome, lblDesc, lblLocation, lblInauguracao, lblStatus;
+    private ImageView imgAtracao;
     private ModelAtracao atracao = new ModelAtracao();
 
 
@@ -34,9 +36,11 @@ public class Atracao extends AppCompatActivity {
         //window.setStatusBarColor(ContextCompat.getColor(Atracao.this, R.color.transparent));
 
         Intent it = getIntent();
-        atracao = (ModelAtracao) it.getSerializableExtra("atracao");
+        int index = it.getIntExtra("position", -1);
+        atracao = SharedData.getAtracoes().get(index);
 
         topAppBar = findViewById(R.id.topAppBar);
+        imgAtracao = findViewById(R.id.imgAtracao);
         lblNome = findViewById(R.id.lblNome);
         lblDesc = findViewById(R.id.lblDesc);
         lblLocation = findViewById(R.id.lblLocation);
@@ -52,6 +56,7 @@ public class Atracao extends AppCompatActivity {
             }
         });
 
+        imgAtracao.setImageBitmap(atracao.getFoto());
         lblNome.setText(atracao.getNome());
         lblDesc.setText(atracao.getDescricao());
         lblLocation.setText(atracao.getLocalização());
@@ -82,7 +87,7 @@ public class Atracao extends AppCompatActivity {
         protected ArrayList<ModelAtracao> doInBackground(String... strings) {
             ArrayList<ModelAtracao> atracoes = new ArrayList<ModelAtracao>();
             Utils util = new Utils();
-            atracoes = util.getAtracoes(apiUrl);
+            atracoes = util.getAtracoes();
             lblNome.setText(atracoes.get(4).getNome());
             return atracoes;
         }

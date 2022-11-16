@@ -159,7 +159,7 @@ public class Utils {
         return id;
     }
 
-    public ArrayList<ModelAtracao> getAtracoes(String apiUrl) {
+    public ArrayList<ModelAtracao> getAtracoes() {
         String requestStatus;
         ArrayList<ModelAtracao> atracoes = new ArrayList<ModelAtracao>();
 
@@ -183,6 +183,8 @@ public class Utils {
                                 String key = reader.nextName();
                                 if(key.equals("Nome")) {
                                     atracao.setNome(reader.nextString());
+                                } else if (key.equals("idAtracao")) {
+                                    atracao.setId(reader.nextInt());
                                 } else if (key.equals("Descricao")) {
                                     atracao.setDescricao(reader.nextString());
                                 } else if (key.equals("DataInauguracao")) {
@@ -195,6 +197,22 @@ public class Utils {
                                     reader.skipValue();
                                 }
                             }
+
+                            if (atracao.getId() > 0) {
+                                String urlFoto = "imageatracao/"+atracao.getId();
+                                InputStream responseBodyFoto = NetworkUtils.sendRequest(urlFoto);
+                                if (responseBodyFoto != null) {
+                                    try {
+                                        Bitmap foto = BitmapFactory.decodeStream(responseBodyFoto);
+                                        if (foto != null) {
+                                            atracao.setFoto(foto);
+                                        }
+                                    } catch (Exception e) {
+                                        Log.d("TAG", "Image error: " + e.getMessage());
+                                    }
+                                }
+                            }
+
                             atracoes.add(atracao);
                             reader.endObject();
                         }
@@ -610,10 +628,25 @@ public class Utils {
         return cupons;
     }
 
-    public Bitmap getImage(String apiUrl, Cliente cliente) {
+    public Bitmap getImageCliente(String apiUrl, Cliente cliente) {
         Bitmap image = null;
 
         String url = "imagecliente/"+cliente.getId();
+        InputStream responseBody = NetworkUtils.sendRequest(url);
+        if (responseBody != null) {
+            try {
+                image = BitmapFactory.decodeStream(responseBody);
+            } catch (Exception e) {
+                Log.d("TAG", "read Image Error: " + e.getMessage());
+            }
+        }
+        return image;
+    }
+
+    public Bitmap getImageAtracao(ModelAtracao atracao) {
+        Bitmap image = null;
+
+        String url = "imageatracao/"+atracao.getId();
         InputStream responseBody = NetworkUtils.sendRequest(url);
         if (responseBody != null) {
             try {

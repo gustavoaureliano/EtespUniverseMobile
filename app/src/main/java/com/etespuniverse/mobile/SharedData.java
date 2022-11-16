@@ -11,14 +11,15 @@ public class SharedData {
     private Context context = null;
     private static Cliente cliente = new Cliente();
     private static ArrayList<Ingresso> ingressos = new ArrayList<>();
-    private static ArrayList<Atracao> atracoes = new ArrayList<>();
+    private static ArrayList<ModelAtracao> atracoes = new ArrayList<>();
     private static ArrayList<Cupom> cupons = new ArrayList<>();
     private static ArrayList<ItemCarrinho> carrinho = new ArrayList<>();
     private static boolean logado = false;
     //private static final String apiUrl = "http://10.0.0.2/tcc/api/"; //emulador
     //private static final String apiUrl = "http://192.168.0.9/tcc/api/"; //meu pc
     //private static final String apiUrl = "http://192.168.0.9/testcomposer/api/"; //meu pc 2
-    private static String apiUrl = "http://192.168.0.2/web-tcc/api/"; //meu pc 3
+    private static String apiUrl = "http://192.168.0.7/web-tcc/api/"; //meu pc 3
+    //private static String apiUrl = "http://10.67.74.58:8080/web-tcc/api/"; //emulador
     //public static final String apiUrl = "http://192.168.62.145/web-tcc/api/"; //meu pc 4
     //private static final String apiUrl = "http://testtccheroku3.herokuapp.com/api/"; //internet
 
@@ -53,11 +54,11 @@ public class SharedData {
         SharedData.ingressos = ingressos;
     }
 
-    public static ArrayList<Atracao> getAtracoes() {
+    public static ArrayList<ModelAtracao> getAtracoes() {
         return atracoes;
     }
 
-    public static void setAtracoes(ArrayList<Atracao> atracoes) {
+    public static void setAtracoes(ArrayList<ModelAtracao> atracoes) {
         SharedData.atracoes = atracoes;
     }
 

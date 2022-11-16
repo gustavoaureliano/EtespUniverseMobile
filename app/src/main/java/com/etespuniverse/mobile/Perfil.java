@@ -188,7 +188,7 @@ public class Perfil extends AppCompatActivity {
         @Override
         protected Bitmap doInBackground(Void... voids) {
             Utils util = new Utils();
-            Bitmap image = util.getImage(apiUrl, cliente);
+            Bitmap image = util.getImageCliente(apiUrl, cliente);
             Log.d("TAG", "image: " + image);
             return image;
         }

@@ -1,5 +1,7 @@
 package com.etespuniverse.mobile;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class ModelAtracao implements Serializable {
@@ -10,6 +12,7 @@ public class ModelAtracao implements Serializable {
     private String descricao = "";
     private String dataInauguracao = "";
     private String localização = "";
+    private Bitmap foto = null;
 
     public int getId() {
         return id;
@@ -57,5 +60,13 @@ public class ModelAtracao implements Serializable {
 
     public void setLocalização(String localização) {
         this.localização = localização;
+    }
+
+    public Bitmap getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Bitmap foto) {
+        this.foto = foto;
     }
 }

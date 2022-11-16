@@ -145,7 +145,8 @@ public class Atracoes extends Fragment {
         protected ArrayList<ModelAtracao> doInBackground(String... strings) {
             ArrayList<ModelAtracao> atracoes = new ArrayList<ModelAtracao>();
             Utils util = new Utils();
-            atracoes = util.getAtracoes(apiUrl);
+            atracoes = util.getAtracoes();
+            SharedData.setAtracoes(atracoes);
             return atracoes;
         }
 
@@ -159,11 +160,11 @@ public class Atracoes extends Fragment {
             adapter.setClickListener(new AtracoesAdapter.ItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    ImageView cardImage = view.findViewById(R.id.cardImage);
+                    ImageView imgAtracao = view.findViewById(R.id.imgAtracao);
                     Intent it = new Intent(getContext(), Atracao.class);
-                    it.putExtra("atracao", atracoes.get(position));
+                    it.putExtra("position", position);
                     ActivityOptions options = ActivityOptions
-                            .makeSceneTransitionAnimation(getActivity(), cardImage, "cardImage");
+                            .makeSceneTransitionAnimation(getActivity(), imgAtracao, "cardImage");
                     startActivity(it, options.toBundle());
                     //startActivity(it);
                 }

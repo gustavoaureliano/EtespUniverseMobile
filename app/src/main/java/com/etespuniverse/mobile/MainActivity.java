@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private CarouselView carouselView;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             //Cliente cliente = new Cliente();
+
             DBHandlerLogin dbHandlerLogin = new DBHandlerLogin(MainActivity.this);
             cliente = dbHandlerLogin.getCliente();
             Utils util = new Utils();
