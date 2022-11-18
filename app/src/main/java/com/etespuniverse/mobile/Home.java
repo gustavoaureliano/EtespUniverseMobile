@@ -37,7 +37,7 @@ public class Home extends Fragment {
     private CircularProgressIndicator progressIndicator;
 
     private CarouselView carouselView;
-    private int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3, R.drawable.image_4, R.drawable.image_5};
+    private int[] sampleImages = {R.drawable.carrossel_01, R.drawable.carrossel_02, R.drawable.carrossel_03};
 
     private Cliente cliente = FragmentsPage.cliente;
     private String apiUrl = SharedData.getApiUrl();

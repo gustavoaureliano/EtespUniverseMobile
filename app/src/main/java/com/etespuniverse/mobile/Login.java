@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ public class Login extends AppCompatActivity {
 
     private Button btnLogin, btnApiUrl;
     private TextInputEditText txtEmail, txtSenha;
+    private TextView btnCadastro;
     //private MaterialSwitch switchLogin;
 
     EditText txtApiURL;
@@ -38,6 +40,7 @@ public class Login extends AppCompatActivity {
         txtApiURL = findViewById(R.id.txtApiURL);
         //switchLogin = findViewById(R.id.switchLogin);
         btnApiUrl = findViewById(R.id.btnUrlApi);
+        btnCadastro = findViewById(R.id.btnCadastro);
 
         btnApiUrl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +83,15 @@ public class Login extends AppCompatActivity {
                 LoginTask login = new LoginTask();
                 login.execute();
         }
+        });
+
+        btnCadastro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(Login.this, Cadastro.class);
+                startActivity(it);
+                finish();
+            }
         });
 
     }

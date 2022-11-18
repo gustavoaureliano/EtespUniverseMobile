@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ public class Cadastro extends AppCompatActivity {
 
     private TextInputEditText txtNome, txtCPF, txtDataNasc, txtEmail, txtSenha;
     private Button btnCadastrar;
+    private TextView btnLogin;
     private ProgressDialog load;
     private String apiUrl = SharedData.getApiUrl();
 
@@ -29,6 +31,7 @@ public class Cadastro extends AppCompatActivity {
         txtDataNasc = findViewById(R.id.txtDataNasc);
         txtEmail = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
+        btnLogin = findViewById(R.id.btnLogin);
 
         btnCadastrar = findViewById(R.id.btnCadastro);
 
@@ -65,6 +68,15 @@ public class Cadastro extends AppCompatActivity {
                 //Toast.makeText(Cadastro.this, ""+nomeCompleto+"\n"+nome+"\n"+sobrenome, Toast.LENGTH_SHORT).show();
                 CadastroTask task = new CadastroTask();
                 task.execute(nome, sobrenome, cpf, dataNascimento, email, senha);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(Cadastro.this, Login.class);
+                startActivity(it);
+                finish();
             }
         });
 
