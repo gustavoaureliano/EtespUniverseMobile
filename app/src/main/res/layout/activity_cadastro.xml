@@ -9,12 +9,26 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:layout_width="39dp"
-        android:layout_height="30dp"
-        android:layout_margin="20dp"
-        android:transitionName="logo"
-        android:background="@color/white" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingVertical="10dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:transitionName="logo"
+            android:src="@drawable/logo_simbolo" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:transitionName="logo"
+            android:src="@drawable/logo_texto_roxa" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
