@@ -165,8 +165,6 @@ public class Login extends AppCompatActivity {
 
 
                 Toast.makeText(Login.this, "Login efetuado com sucesso", Toast.LENGTH_SHORT).show();
-                Intent it = new Intent(Login.this, FragmentsPage.class);
-                it.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
             } else {
                 Toast.makeText(Login.this, "Dados incorretos", Toast.LENGTH_SHORT).show();

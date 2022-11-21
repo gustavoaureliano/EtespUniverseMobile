@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -70,19 +71,31 @@ public class Carrinho extends AppCompatActivity {
         btnPagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Pedido pedido = new Pedido();
-                pedido.setCliente(cliente);
-                ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
-                for (ItemCarrinho item: itens) {
-                    for (int i = 0; i < item.getQtde(); i++) {
-                        ingressos.add(item);
+                if (SharedData.getCliente().getId() > 0) {
+                    Pedido pedido = new Pedido();
+                    pedido.setCliente(SharedData.getCliente());
+                    ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
+                    for (ItemCarrinho item: itens) {
+                        for (int i = 0; i < item.getQtde(); i++) {
+                            ingressos.add(item);
+                        }
                     }
+                    pedido.setIngressos(ingressos);
+                    pedido.setIdCupom(selectedCupom.getIdCupom());
+                    ComprarTask task = new ComprarTask();
+                    //Toast.makeText(Carrinho.this, pedido.toString(), Toast.LENGTH_SHORT).show();
+                    task.execute(pedido);
+                } else {
+                    Snackbar.make(btnPagar, "É preciso estar logado para realizar a compra.", Snackbar.LENGTH_SHORT)
+                            .setAction("Login", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent it = new Intent(Carrinho.this, Login.class);
+                                    startActivity(it);
+                                }
+                            })
+                            .show();
                 }
-                pedido.setIngressos(ingressos);
-                pedido.setIdCupom(selectedCupom.getIdCupom());
-                ComprarTask task = new ComprarTask();
-                //Toast.makeText(Carrinho.this, pedido.toString(), Toast.LENGTH_SHORT).show();
-                task.execute(pedido);
             }
         });
 

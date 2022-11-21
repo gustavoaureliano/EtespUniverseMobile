@@ -465,6 +465,9 @@ public class Utils {
                                 } else if (key.equals("idCliente")) {
                                     ingresso.setIdCliente(reader.nextInt());
                                     Log.d("TAG", "idCliente: " + ingresso.getIdCliente());
+                                } else if (key.equals("idStatusIngresso")) {
+                                    ingresso.setIdStatusIngresso(reader.nextInt());
+                                    Log.d("TAG", "idCliente: " + ingresso.getIdCliente());
                                 } else if (key.equals("idTipoIngresso")) {
                                     ingresso.setIdTipoIngresso(reader.nextInt());
                                     Log.d("TAG", "idTipoIngresso: " + ingresso.getIdTipoIngresso());

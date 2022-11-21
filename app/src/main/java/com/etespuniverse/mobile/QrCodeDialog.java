@@ -20,7 +20,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class QrCodeDialog extends DialogFragment {
 
-    private TextView lblDesc;
+    private TextView lblDesc, lblIdIngresso;
     private ImageView imgQrCode;
     private Ingresso ingresso = new Ingresso();
     private Bitmap qrCode;
@@ -55,10 +55,13 @@ public class QrCodeDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_qrcode, container, false);
 
         lblDesc = view.findViewById(R.id.lblDesc);
+        lblIdIngresso = view.findViewById(R.id.lblIdIngresso);
         imgQrCode = view.findViewById(R.id.imgQrCode);
         btnClose = view.findViewById(R.id.btnClose);
 
         lblDesc.setText(ingresso.getDescricao());
+        lblIdIngresso.setText("#"+ingresso.getIdIngresso());
+        //lblIdIngresso.setText("#123");
         imgQrCode.setImageBitmap(qrCode);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override

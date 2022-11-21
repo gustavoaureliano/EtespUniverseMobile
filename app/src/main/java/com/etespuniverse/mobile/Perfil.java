@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.FileNotFoundException;
@@ -168,9 +169,11 @@ public class Perfil extends AppCompatActivity {
             super.onPostExecute(atualizar);
             Log.d("TAG", "atualizar: " + atualizar);
             if (atualizar) {
-                Toast.makeText(Perfil.this, "Dados atualizados", Toast.LENGTH_SHORT).show();
+                Snackbar.make(btnAtualizar, "Dados atualizados.", Snackbar.LENGTH_SHORT)
+                        .show();
             } else {
-                Toast.makeText(Perfil.this, "Falha ao atualizar os dados", Toast.LENGTH_SHORT).show();
+                Snackbar.make(btnAtualizar, "Falha ao atualizar os dados.", Snackbar.LENGTH_SHORT)
+                        .show();
             }
         }
 

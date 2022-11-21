@@ -103,11 +103,18 @@ public class Ingressos extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Ingresso> ingressos) {
-            super.onPostExecute(ingressos);
+        protected void onPostExecute(ArrayList<Ingresso> ingressosFull) {
+            super.onPostExecute(ingressosFull);
             //load.dismiss();
+            ArrayList<Ingresso> ingressosValidos = new ArrayList<Ingresso>();
+            for (Ingresso ingreso: ingressosFull) {
+                if (ingreso.getIdStatusIngresso() == 1) {
+                    Log.d("TAG", "ingresso válido - id:" + ingreso.getIdIngresso() + ", status: " + ingreso.getIdStatusIngresso());
+                    ingressosValidos.add(ingreso);
+                }
+            }
             rvIngressos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-            adapter = new IngressosAdapter(getContext(), ingressos);
+            adapter = new IngressosAdapter(getContext(), ingressosValidos);
             adapter.setOnClickListener(new OnClickIngressoListener() {
                 @Override
                 public void onClick(Ingresso ingresso, int index, ImageView imgIngresso) {
