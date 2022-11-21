@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class Login extends AppCompatActivity {
 
-    private Button btnLogin, btnApiUrl;
+    private Button btnLogin;
     private TextInputEditText txtEmail, txtSenha;
     private TextView btnCadastro;
     //private MaterialSwitch switchLogin;
@@ -27,7 +27,6 @@ public class Login extends AppCompatActivity {
     EditText txtApiURL;
     private ProgressDialog load;
     private Cliente cliente = SharedData.getCliente();
-    private String apiUrl = SharedData.getApiUrl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +36,8 @@ public class Login extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         txtEmail = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
-        txtApiURL = findViewById(R.id.txtApiURL);
         //switchLogin = findViewById(R.id.switchLogin);
-        btnApiUrl = findViewById(R.id.btnUrlApi);
         btnCadastro = findViewById(R.id.btnCadastro);
-
-        btnApiUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = txtApiURL.getText().toString();
-                if (!url.equals(""))
-                    SharedData.setApiUrl(url);
-                Toast.makeText(Login.this, "URL saved: " + url, Toast.LENGTH_SHORT).show();
-            }
-        });
 
         //SharedPreferences sharedPreferences = getSharedPreferences(
         //        getString(R.string.preference_file_key), MODE_PRIVATE);
@@ -73,9 +60,7 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //int id = cliente.getId();
-                //Toast.makeText(Login.this, ""+id, Toast.LENGTH_SHORT).show();
-                apiUrl = txtApiURL.getText().toString();
+                int id = cliente.getId();
                 String email = txtEmail.getText().toString();
                 String senha = txtSenha.getText().toString();
                 cliente.setEmail(email);
@@ -121,7 +106,7 @@ public class Login extends AppCompatActivity {
             String senha = cliente.getSenha();
             Log.d("TAG", "Clinte got (LoginPage): " + cliente.toString());
             Utils util = new Utils();
-            int id = util.checkLogin(SharedData.getApiUrl(), email, senha);
+            int id = util.checkLogin(email, senha);
             boolean login = false;
             if(id > 0) {
                 //int id = util.getIdCliente(apiUrl, email);
@@ -145,9 +130,6 @@ public class Login extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean login) {
             super.onPostExecute(login);
-            Toast.makeText(Login.this, "Hello", Toast.LENGTH_SHORT).show();
-            //Toast.makeText(Login.this, "ID: " + cliente.getId(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(Login.this, "ID: " + cliente.getId(), Toast.LENGTH_SHORT).show();
 
             if (login) {
                 Log.d("TAG", "Clinte got (LoginPage): " + cliente.toString());
@@ -156,14 +138,6 @@ public class Login extends AppCompatActivity {
                 SharedData.setCliente(cliente);
                 DBHandlerLogin dbHandlerLogin = new DBHandlerLogin(Login.this);
                 dbHandlerLogin.setCliente(cliente);
-
-                //SharedPreferences sharedPreferences = getSharedPreferences(
-                //        getString(R.string.preference_file_key), MODE_PRIVATE);
-                //SharedPreferences.Editor editor = sharedPreferences.edit();
-                //editor.putInt("idCliente", cliente.getId());
-                //editor.apply();
-
-
                 Toast.makeText(Login.this, "Login efetuado com sucesso", Toast.LENGTH_SHORT).show();
                 finish();
             } else {

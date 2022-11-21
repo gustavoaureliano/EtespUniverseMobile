@@ -142,7 +142,7 @@ public class Home extends Fragment {
         protected ArrayList<Ingresso> doInBackground(Void... voids) {
             ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
             Utils util = new Utils();
-            ingressos = util.getTiposIngresso(SharedData.getApiUrl(), cliente);
+            ingressos = util.getTiposIngresso(cliente);
             return ingressos;
         }
 

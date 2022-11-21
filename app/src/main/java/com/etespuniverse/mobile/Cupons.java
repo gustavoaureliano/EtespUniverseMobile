@@ -57,7 +57,7 @@ public class Cupons extends AppCompatActivity {
         @Override
         protected ArrayList<Cupom> doInBackground(Void... voids) {
             Utils util = new Utils();
-            ArrayList<Cupom> cupons = util.getCuponsCliente(apiUrl, cliente);
+            ArrayList<Cupom> cupons = util.getCuponsCliente(cliente);
             Log.d("TAG", "count cupons: " + cupons.size());
             return cupons;
         }

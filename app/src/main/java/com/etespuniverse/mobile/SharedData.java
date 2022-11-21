@@ -15,7 +15,7 @@ public class SharedData {
     private static ArrayList<Cupom> cupons = new ArrayList<>();
     private static ArrayList<ItemCarrinho> carrinho = new ArrayList<>();
     private static boolean logado = false;
-    //private static final String apiUrl = "http://10.0.0.2/tcc/api/"; //emulador
+    //private static String apiUrl = "http://10.0.2.2/web-tcc/api/"; //emulador
     //private static final String apiUrl = "http://192.168.0.9/tcc/api/"; //meu pc
     //private static final String apiUrl = "http://192.168.0.9/testcomposer/api/"; //meu pc 2
     private static String apiUrl = "http://192.168.0.7/web-tcc/api/"; //meu pc 3

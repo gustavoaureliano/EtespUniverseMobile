@@ -97,7 +97,7 @@ public class Utils {
         return cliente;
     }
 
-    public int checkLogin(String apiUrl, String email, String senha) {
+    public int checkLogin(String email, String senha) {
         String status = "oi";
         int id = -1;
         boolean check = false;
@@ -131,30 +131,6 @@ public class Utils {
             } catch (IOException e) {
                 Log.d("TAG", "checkLogin read Error: " + e.getMessage());
             }
-        }
-        return id;
-    }
-
-    public int getIdCliente(String apiUrl, String email) {
-        int id = -1;
-        String status;
-        String url = apiUrl+"getuserid";
-        JsonReader reader = NetworkUtils.getJSONIdClient(url, email);
-        try {
-            reader.beginObject();
-            while (reader.hasNext()) {
-                String name = reader.nextName();
-                if (name.equals("status")) {
-                    status = reader.nextString();
-                } else if (name.equals("id")){
-                    id = reader.nextInt();
-                } else {
-                    reader.skipValue();
-                }
-            }
-            reader.endObject();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return id;
     }
@@ -230,7 +206,7 @@ public class Utils {
         return atracoes;
     }
 
-    public int cadastro(String apiUrl, Cliente cliente) {
+    public int cadastro(Cliente cliente) {
         String status = "";
         int idCliente = -1;
         String url = "cadastro";
@@ -273,7 +249,7 @@ public class Utils {
         return idCliente;
     }
 
-    public boolean atualizarCliente(String apiUrl, Cliente cliente) {
+    public boolean atualizarCliente(Cliente cliente) {
         String status = "";
         int atualizar = -1;
         boolean sucesso = false;
@@ -328,7 +304,7 @@ public class Utils {
         return sucesso;
     }
 
-    public boolean atualizarFotoCliente(String apiUrl, Cliente cliente) {
+    public boolean atualizarFotoCliente(Cliente cliente) {
         String status = "";
         int atualizar = -1;
         boolean sucesso = false;
@@ -374,7 +350,7 @@ public class Utils {
         return sucesso;
     }
 
-    public boolean comprarIngresso(String apiUrl, Pedido pedido) {
+    public boolean comprarIngresso(Pedido pedido) {
         String status = "";
         boolean check = false;
         String url = "compra";
@@ -436,7 +412,7 @@ public class Utils {
         return check;
     }
 
-    public ArrayList<Ingresso> getIngressos(String apiUrl, Cliente cliente) {
+    public ArrayList<Ingresso> getIngressos(Cliente cliente) {
         String status;
         ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
 
@@ -512,7 +488,7 @@ public class Utils {
         return ingressos;
     }
 
-    public ArrayList<Ingresso> getTiposIngresso(String apiUrl, Cliente cliente) {
+    public ArrayList<Ingresso> getTiposIngresso(Cliente cliente) {
         String status;
         ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
 
@@ -565,7 +541,7 @@ public class Utils {
         return ingressos;
     }
 
-    public ArrayList<Cupom> getCuponsCliente(String apiUrl, Cliente cliente) {
+    public ArrayList<Cupom> getCuponsCliente(Cliente cliente) {
         String status;
         ArrayList<Cupom> cupons = new ArrayList<Cupom>();
 
@@ -631,7 +607,7 @@ public class Utils {
         return cupons;
     }
 
-    public Bitmap getImageCliente(String apiUrl, Cliente cliente) {
+    public Bitmap getImageCliente(Cliente cliente) {
         Bitmap image = null;
 
         String url = "imagecliente/"+cliente.getId();

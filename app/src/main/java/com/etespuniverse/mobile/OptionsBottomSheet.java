@@ -133,7 +133,7 @@ public class OptionsBottomSheet extends BottomSheetDialogFragment {
         @Override
         protected Bitmap doInBackground(Void... voids) {
             Utils util = new Utils();
-            Bitmap image = util.getImageCliente(apiUrl, cliente);
+            Bitmap image = util.getImageCliente(cliente);
             Log.d("TAG", "image: " + image);
             return image;
         }

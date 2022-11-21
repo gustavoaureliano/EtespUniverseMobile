@@ -273,7 +273,7 @@ public class Carrinho extends AppCompatActivity {
                 Log.d("TAG", "Ingresso: " + ingresso.getIdTipoIngresso() + " - " + ingresso.isMeia() + " - inicio/validade: " + ingresso.getDataInicio() + " / " + ingresso.getDataValidade());
             }
             Utils util = new Utils();
-            boolean compra = util.comprarIngresso(apiUrl, pedido);
+            boolean compra = util.comprarIngresso(pedido);
             return compra;
         }
 
@@ -320,7 +320,7 @@ public class Carrinho extends AppCompatActivity {
         @Override
         protected ArrayList<Cupom> doInBackground(Void... voids) {
             Utils util = new Utils();
-            cupons = util.getCuponsCliente(apiUrl, cliente);
+            cupons = util.getCuponsCliente(cliente);
             Log.d("TAG", "count cupons: " + cupons.size());
             return cupons;
         }

@@ -98,7 +98,7 @@ public class Ingressos extends Fragment {
         protected ArrayList<Ingresso> doInBackground(Void... voids) {
             ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
             Utils util = new Utils();
-            ingressos = util.getIngressos(apiUrl, cliente);
+            ingressos = util.getIngressos(cliente);
             return ingressos;
         }
 
@@ -118,7 +118,6 @@ public class Ingressos extends Fragment {
             adapter.setOnClickListener(new OnClickIngressoListener() {
                 @Override
                 public void onClick(Ingresso ingresso, int index, ImageView imgIngresso) {
-                    Toast.makeText(getContext(), "Mostrar Ingresso", Toast.LENGTH_SHORT).show();
                     Bitmap bitmap;
                     QRGEncoder qrgEncoder;
                     WindowManager manager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);

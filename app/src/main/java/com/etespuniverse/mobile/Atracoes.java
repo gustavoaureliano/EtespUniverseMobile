@@ -100,7 +100,6 @@ public class Atracoes extends Fragment {
         View view = inflater.inflate(R.layout.fragment_atracoes, container, false);
 
         //cardAtracao = view.findViewById(R.id.card1);
-        card1Image = view.findViewById(R.id.card1Image);
         rvAtracoes = view.findViewById(R.id.rvAtracoes);
         /*
         cardAtracao.setOnClickListener(new View.OnClickListener() {

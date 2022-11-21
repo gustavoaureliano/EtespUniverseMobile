@@ -153,8 +153,8 @@ public class Perfil extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             Utils util = new Utils();
-            Boolean atualizar = util.atualizarCliente(apiUrl, cliente);
-            Boolean atualizarFoto = util.atualizarFotoCliente(apiUrl, cliente);
+            Boolean atualizar = util.atualizarCliente(cliente);
+            Boolean atualizarFoto = util.atualizarFotoCliente(cliente);
             Log.d("TAG", "atualizar: " + atualizar);
             if (atualizar && atualizarFoto) {
                 SharedData.salvarCliente();
@@ -191,7 +191,7 @@ public class Perfil extends AppCompatActivity {
         @Override
         protected Bitmap doInBackground(Void... voids) {
             Utils util = new Utils();
-            Bitmap image = util.getImageCliente(apiUrl, cliente);
+            Bitmap image = util.getImageCliente(cliente);
             Log.d("TAG", "image: " + image);
             return image;
         }

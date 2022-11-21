@@ -38,7 +38,7 @@ public class FragmentsPage extends AppCompatActivity {
 //
         bottomNavigation = findViewById(R.id.bottom_navigation);
 //
-        bottomNavigation.getMenu().getItem(2).setChecked(true);
+        //bottomNavigation.getMenu().getItem(1).setChecked(true);
 //
         openFragment(Home.newInstance());
 //
@@ -54,9 +54,6 @@ public class FragmentsPage extends AppCompatActivity {
                         return true;
                     case R.id.page_home:
                         openFragment(Home.newInstance());
-                        return true;
-                    case R.id.page_maps:
-                        openFragment(new Maps());
                         return true;
                     case R.id.page_options:
                         OptionsBottomSheet optionsBottomSheet = OptionsBottomSheet.newInstance();
