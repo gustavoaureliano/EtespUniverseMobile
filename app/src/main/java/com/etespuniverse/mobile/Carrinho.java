@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -38,6 +39,7 @@ public class Carrinho extends AppCompatActivity {
     private AutoCompleteTextView listCupons;
     private RecyclerView rvItens;
     private TextView lblTotal;
+    private TextInputEditText txtNumCartao, txtValidade, txtCVV, txtNome;
     ArrayList<ItemCarrinho> itens = new ArrayList<>();
     ArrayList<Cupom> cupons = new ArrayList<>();
     Cupom selectedCupom = new Cupom();
@@ -60,6 +62,10 @@ public class Carrinho extends AppCompatActivity {
         //btnItens = findViewById(R.id.btnItens);
         //btnAddItens = findViewById(R.id.btnAddItens);
         lblTotal = findViewById(R.id.lblTotal);
+        txtNumCartao = findViewById(R.id.txtNumCartao);
+        txtValidade = findViewById(R.id.txtValidade);
+        txtCVV = findViewById(R.id.txtCVV);
+        txtNome = findViewById(R.id.txtNome);
 
         topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,29 +77,38 @@ public class Carrinho extends AppCompatActivity {
         btnPagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SharedData.getCliente().getId() > 0) {
-                    Pedido pedido = new Pedido();
-                    pedido.setCliente(SharedData.getCliente());
-                    ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
-                    for (ItemCarrinho item: itens) {
-                        for (int i = 0; i < item.getQtde(); i++) {
-                            ingressos.add(item);
+                boolean numCartao = txtNumCartao.getText().length() >= 16;
+                boolean validade = txtValidade.getText().length() >= 5;
+                boolean cvv = txtCVV.getText().length() >= 3;
+                boolean nome = txtNome.getText().length() > 0;
+                if (numCartao || validade || cvv || nome) {
+                    if (SharedData.getCliente().getId() > 0) {
+                        Pedido pedido = new Pedido();
+                        pedido.setCliente(SharedData.getCliente());
+                        ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
+                        for (ItemCarrinho item: itens) {
+                            for (int i = 0; i < item.getQtde(); i++) {
+                                ingressos.add(item);
+                            }
                         }
+                        pedido.setIngressos(ingressos);
+                        pedido.setIdCupom(selectedCupom.getIdCupom());
+                        ComprarTask task = new ComprarTask();
+                        //Toast.makeText(Carrinho.this, pedido.toString(), Toast.LENGTH_SHORT).show();
+                        task.execute(pedido);
+                    } else {
+                        Snackbar.make(btnPagar, "É preciso estar logado para realizar a compra.", Snackbar.LENGTH_SHORT)
+                                .setAction("Login", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent it = new Intent(Carrinho.this, Login.class);
+                                        startActivity(it);
+                                    }
+                                })
+                                .show();
                     }
-                    pedido.setIngressos(ingressos);
-                    pedido.setIdCupom(selectedCupom.getIdCupom());
-                    ComprarTask task = new ComprarTask();
-                    //Toast.makeText(Carrinho.this, pedido.toString(), Toast.LENGTH_SHORT).show();
-                    task.execute(pedido);
                 } else {
-                    Snackbar.make(btnPagar, "É preciso estar logado para realizar a compra.", Snackbar.LENGTH_SHORT)
-                            .setAction("Login", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent it = new Intent(Carrinho.this, Login.class);
-                                    startActivity(it);
-                                }
-                            })
+                    Snackbar.make(btnPagar, "Preencha os dados do cartão.", Snackbar.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -140,98 +155,6 @@ public class Carrinho extends AppCompatActivity {
         rvItens.setAdapter(adapter);
         rvItens.setLayoutManager(new LinearLayoutManager(Carrinho.this, LinearLayoutManager.VERTICAL, false));
         rvItens.setNestedScrollingEnabled(false); //dá pra fazer no xml direto também
-        /*
-        btnAddItens.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ItemCarrinho itemCarrinho = new ItemCarrinho();
-                ItemCarrinho itemCarrinho2 = new ItemCarrinho();
-                itemCarrinho.setIdTipoIngresso(1);
-                //itemCarrinho.setDataInicio("2022-10-02");
-                //itemCarrinho.setDataValidade("2022-10-02");
-                itemCarrinho.setMeia(false);
-                itemCarrinho.setPreco(56.91);
-                itemCarrinho.setQtde(1);
-                itemCarrinho2.setIdTipoIngresso(1);
-                //itemCarrinho2.setDataInicio("2022-10-02");
-                //itemCarrinho2.setDataValidade("2022-10-02");
-                itemCarrinho2.setMeia(true);
-                itemCarrinho2.setPreco(49.99);
-                itemCarrinho2.setQtde(2);
-                Log.d("TAG", "Carrinho - Item -> " + itemCarrinho.getIdTipoIngresso() + ": " + itemCarrinho.getPreco() + " (" + itemCarrinho.getQtde() + ") - " + itemCarrinho.isMeia());
-                Log.d("TAG", "Carrinho - Item -> " + itemCarrinho2.getIdTipoIngresso() + ": " + itemCarrinho2.getPreco() + " (" + itemCarrinho2.getQtde() + ") - " + itemCarrinho2.isMeia());
-
-                DBHandler dbHandler = new DBHandler(Carrinho.this);
-                dbHandler.addItem(itemCarrinho2);
-                dbHandler.addItem(itemCarrinho);
-
-                ArrayList<ItemCarrinho> itensTemp = dbHandler.getItens();
-                itens.clear();
-                itens.addAll(itensTemp);
-                adapter.notifyDataSetChanged();
-                atualizarSubTotal();
-            }
-        });
-        */
-        /*
-        btnItens.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("TAG", "start get itens ");
-                DBHandler dbHandler = new DBHandler(Carrinho.this);
-                ArrayList<ItemCarrinho> itens = dbHandler.getItens();
-
-
-                ItensCarrinhoAdapter adapter = new ItensCarrinhoAdapter(Carrinho.this, itens);
-                OnCartItemClickInterface clickInterface = new OnCartItemClickInterface() {
-                    @Override
-                    public void clickPlus(int idItem, int index) {
-                        DBHandler db = new DBHandler(Carrinho.this);
-                        int qtde = db.itemPlus(idItem);
-                        ItemCarrinho item = itens.get(idItem);
-                        item.setQtde(qtde);
-                        itens.set(idItem, item);
-                        adapter.notifyItemChanged(idItem);
-                    }
-
-                    @Override
-                    public void clickMinus(int idItem, int index) {
-                        DBHandler db = new DBHandler(Carrinho.this);
-                        int qtde = db.itemMinus(idItem);
-                        ItemCarrinho item = itens.get(idItem);
-                        item.setQtde(qtde);
-                        itens.set(idItem, item);
-                        adapter.notifyItemChanged(idItem);
-                    }
-                };
-                adapter.setOnClickInterface(clickInterface);
-                Log.d("TAG", "Item count: " + adapter.getItemCount());
-                rvItens.setAdapter(adapter);
-                rvItens.setLayoutManager(new LinearLayoutManager(Carrinho.this, LinearLayoutManager.VERTICAL, false));
-            }
-        });
-        */
-        //Ingresso ingresso = new Ingresso();
-        //Ingresso ingresso2 = new Ingresso();
-        //ingresso.setIdTipoIngresso(1);
-        //ingresso.setMeia(false);
-        //ingresso.setPreco(56.96);
-        //ingresso2.setIdTipoIngresso(2);
-        //ingresso2.setMeia(true);
-        //ingresso2.setPreco(49.99);
-        //ItemCarrinho itemCarrinho = new ItemCarrinho(ingresso);
-        //ItemCarrinho itemCarrinho2 = new ItemCarrinho(ingresso2);
-        //Log.d("TAG", "Carrinho - Item -> " + itemCarrinho.getIdTipoIngresso() + ": " + itemCarrinho.getPreco() + " (" + itemCarrinho.getQtde() + ")");
-        //Log.d("TAG", "Carrinho - Item -> " + itemCarrinho2.getIdTipoIngresso() + ": " + itemCarrinho2.getPreco() + " (" + itemCarrinho2.getQtde() + ")");
-        //itemCarrinho.setQtde(1);
-        //itemCarrinho2.setQtde(2);
-        //
-        //DBHandler dbHandler = new DBHandler(Carrinho.this);
-        //dbHandler.addItem(itemCarrinho);
-        //dbHandler.addItem(itemCarrinho2);
-
-        //IngressosTask ingressosTask = new IngressosTask();
-        //ingressosTask.execute();
 
         CuponsTask cuponsTask = new CuponsTask();
         cuponsTask.execute();
@@ -328,6 +251,7 @@ public class Carrinho extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Cupom> cupons) {
             super.onPostExecute(cupons);
+            cupons.add(0, new Cupom());
             ArrayAdapter<Cupom> adapter = new ArrayAdapter<Cupom>(Carrinho.this,
                     android.R.layout.simple_dropdown_item_1line, cupons);
             listCupons.setAdapter(adapter);
@@ -336,7 +260,6 @@ public class Carrinho extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {//selectedCupom = (Cupom) adapterView.getSelectedItem();
                     selectedCupom = (Cupom) adapterView.getItemAtPosition(position);
                     atualizarSubTotal();
-                    Toast.makeText(Carrinho.this, "ItemClicked(pos: "+ position +", id: "+ id +"): " + selectedCupom.getDesconto() + "%", Toast.LENGTH_SHORT).show();
                 }
             });
         }

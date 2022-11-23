@@ -90,9 +90,9 @@ public class Perfil extends AppCompatActivity {
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
-                            Toast.makeText(Perfil.this, "Result OK", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Perfil.this, "Result OK", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(Perfil.this, "Result Not OK", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Perfil.this, "Result Not OK", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

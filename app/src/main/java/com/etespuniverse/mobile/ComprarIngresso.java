@@ -8,11 +8,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -24,14 +30,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class ComprarIngresso extends AppCompatActivity {
 
     private static final String ARG_PARAM_CLIENTE = "cliente";
 
     private MaterialToolbar topAppBar;
+    private ImageView imgIngresso;
     private Button btnComprar, btnPlusInt, btnMinusInt, btnPlusMeia, btnMinusMeia;
-    private TextView lblPreco, lblPrecoMeia, lblQtdeInt, lblQtdeMeia, lblTotal;
+    private TextView lblDesc, lblPreco, lblPrecoMeia, lblQtdeInt, lblQtdeMeia, lblTotal;
     private TextInputLayout txtDataLayout;
     private TextInputEditText txtData;
 
@@ -50,7 +58,8 @@ public class ComprarIngresso extends AppCompatActivity {
         //ingresso.setPreco(50.99);
 
         Intent it = getIntent();
-        ingresso = (Ingresso) it.getSerializableExtra("ingresso");
+        int index = it.getIntExtra("index", -1);
+        ingresso = SharedData.getTiposIngressos().get(index);
         Log.d("TAG", "Ingresso got: (" + ingresso.getIdTipoIngresso() + ") " + ingresso.getDescricao());
 
         ingressoInt.setIdTipoIngresso(ingresso.getIdTipoIngresso());
@@ -63,11 +72,13 @@ public class ComprarIngresso extends AppCompatActivity {
         ingressoMeia.setMeia(true);
 
         topAppBar = findViewById(R.id.topAppBar);
+        imgIngresso = findViewById(R.id.imgIngresso);
         btnComprar = findViewById(R.id.btnComprar);
         btnPlusInt = findViewById(R.id.btnPlusInt);
         btnMinusInt = findViewById(R.id.btnMinusInt);
         btnPlusMeia = findViewById(R.id.btnPlusMeia);
         btnMinusMeia = findViewById(R.id.btnMinusMeia);
+        lblDesc = findViewById(R.id.lblDesc);
         lblPreco = findViewById(R.id.lblPreco);
         lblPrecoMeia = findViewById(R.id.lblPrecoMeia);
         lblQtdeInt = findViewById(R.id.lblQtdeInt);
@@ -76,14 +87,18 @@ public class ComprarIngresso extends AppCompatActivity {
         txtDataLayout = findViewById(R.id.txtDataLayout);
         txtData = findViewById(R.id.txtData);
         txtDataLayout = findViewById(R.id.txtDataLayout);
-        
-        initDatePicker();
+
+        imgIngresso.setImageBitmap(ingresso.getFoto());
+        lblDesc.setText(ingresso.getDescricao());
+
+        //initDatePicker();
         txtData.setText(getTodaysDate());
 
         txtData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                datePickerDialog.show();
+                //datePickerDialog.show();
+                showDatePicker();
             }
         });
 
@@ -215,7 +230,7 @@ public class ComprarIngresso extends AppCompatActivity {
         //return makeDateString(year, month, day);
     }
 
-    private void initDatePicker() {
+    private void showDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -227,6 +242,34 @@ public class ComprarIngresso extends AppCompatActivity {
                 txtData.setText(date);
             }
         };
+
+        Log.d("TAG", "selecionando data");
+        MaterialDatePicker materialDatePicker = MaterialDatePicker.Builder.datePicker()
+                .build();
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                Log.d("TAG", "data selecionada");
+                Log.d("TAG", "data (millis): " + selection);
+                Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                cal.setTimeInMillis((Long) selection);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH) + 1;
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                Log.d("TAG", "data: " + day + "/" + month + "/" + year);
+                cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+                Log.d("TAG", "time: "  + cal.get(Calendar.DAY_OF_MONTH) + " - " + cal.getTime());
+
+                Calendar cal2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                cal2.set(Calendar.DAY_OF_MONTH ,day);
+                Log.d("TAG", "time2: "  + cal2.get(Calendar.DAY_OF_MONTH) + " - " + cal2.getTime());
+                String date = makeDateString(cal2.getTime());
+                ingresso.setDataInicio(cal2.getTime());
+                ingresso.setDataValidade(cal2.getTime());
+                txtData.setText(date);
+            }
+        });
+        materialDatePicker.show(getSupportFragmentManager(), "TAG");
 
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);

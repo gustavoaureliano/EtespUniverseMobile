@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class CuponsAdapter extends RecyclerView.Adapter<CuponsAdapter.ViewHolder
         holder.lblNome.setText(cupom.getNome());
         String txtDesconto = cupom.getDesconto()+"%";
         holder.lblDesconto.setText(txtDesconto);
+        holder.imgCupom.setImageBitmap(cupom.getFoto());
     }
 
     @Override
@@ -44,11 +46,13 @@ public class CuponsAdapter extends RecyclerView.Adapter<CuponsAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView lblNome, lblDesconto;
+        private ImageView imgCupom;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             lblNome = itemView.findViewById(R.id.lblNome);
             lblDesconto = itemView.findViewById(R.id.lblDesconto);
+            imgCupom = itemView.findViewById(R.id.imgCupom);
         }
 
         @Override

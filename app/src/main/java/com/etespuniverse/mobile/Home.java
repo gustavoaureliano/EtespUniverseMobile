@@ -143,6 +143,7 @@ public class Home extends Fragment {
             ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
             Utils util = new Utils();
             ingressos = util.getTiposIngresso(cliente);
+            SharedData.setTiposIngressos(ingressos);
             return ingressos;
         }
 
@@ -155,7 +156,7 @@ public class Home extends Fragment {
                 @Override
                 public void onClick(Ingresso ingresso, int index) {
                     Intent it = new Intent(getContext(), ComprarIngresso.class);
-                    it.putExtra("ingresso", ingresso);
+                    it.putExtra("index", index);
                     startActivity(it);
                 }
             };

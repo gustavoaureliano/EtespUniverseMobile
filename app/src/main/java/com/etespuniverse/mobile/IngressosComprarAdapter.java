@@ -46,6 +46,7 @@ public class IngressosComprarAdapter extends RecyclerView.Adapter<IngressosCompr
         formatter.setRoundingMode(RoundingMode.DOWN);
         String moneyString = "R$ " + formatter.format(money);
         holder.txtPreco.setText(moneyString);
+        holder.imgIngresso.setImageBitmap(ingresso.getFoto());
         holder.btnComprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -471,6 +471,22 @@ public class Utils {
                                     reader.skipValue();
                                 }
                             }
+
+                            if (ingresso.getIdTipoIngresso() > 0) {
+                                String urlFoto = "imageingresso/"+ingresso.getIdTipoIngresso();
+                                InputStream responseBodyFoto = NetworkUtils.sendRequest(urlFoto);
+                                if (responseBodyFoto != null) {
+                                    try {
+                                        Bitmap foto = BitmapFactory.decodeStream(responseBodyFoto);
+                                        if (foto != null) {
+                                            ingresso.setFoto(foto);
+                                        }
+                                    } catch (Exception e) {
+                                        Log.d("TAG", "Image error: " + e.getMessage());
+                                    }
+                                }
+                            }
+
                             ingressos.add(ingresso);
                             reader.endObject();
                         }
@@ -524,6 +540,22 @@ public class Utils {
                                     reader.skipValue();
                                 }
                             }
+
+                            if (ingresso.getIdTipoIngresso() > 0) {
+                                String urlFoto = "imageingresso/"+ingresso.getIdTipoIngresso();
+                                InputStream responseBodyFoto = NetworkUtils.sendRequest(urlFoto);
+                                if (responseBodyFoto != null) {
+                                    try {
+                                        Bitmap foto = BitmapFactory.decodeStream(responseBodyFoto);
+                                        if (foto != null) {
+                                            ingresso.setFoto(foto);
+                                        }
+                                    } catch (Exception e) {
+                                        Log.d("TAG", "Image error: " + e.getMessage());
+                                    }
+                                }
+                            }
+
                             ingressos.add(ingresso);
                             reader.endObject();
                         }
@@ -590,6 +622,22 @@ public class Utils {
                                     reader.skipValue();
                                 }
                             }
+
+                            if (cupom.getIdCupom() > 0) {
+                                String urlFoto = "imagecupom/"+cupom.getIdCupom();
+                                InputStream responseBodyFoto = NetworkUtils.sendRequest(urlFoto);
+                                if (responseBodyFoto != null) {
+                                    try {
+                                        Bitmap foto = BitmapFactory.decodeStream(responseBodyFoto);
+                                        if (foto != null) {
+                                            cupom.setFoto(foto);
+                                        }
+                                    } catch (Exception e) {
+                                        Log.d("TAG", "Image error: " + e.getMessage());
+                                    }
+                                }
+                            }
+
                             cupons.add(cupom);
                             reader.endObject();
                         }

@@ -1,5 +1,7 @@
 package com.etespuniverse.mobile;
 
+import android.graphics.Bitmap;
+
 public class Cupom {
 
     private int idCupom = -1;
@@ -8,7 +10,7 @@ public class Cupom {
     private String descricao = "";
     private String dataValidade = "";
     private String dataInicio = "";
-    private String foto = "";
+    private Bitmap foto = null;
     private double desconto = 0;
     private int idCliente = -1;
 
@@ -60,11 +62,11 @@ public class Cupom {
         this.dataInicio = dataInicio;
     }
 
-    public String getFoto() {
+    public Bitmap getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(Bitmap foto) {
         this.foto = foto;
     }
 
@@ -86,6 +88,10 @@ public class Cupom {
 
     @Override
     public String toString() {
-        return nome + " - desconto de " + desconto + "%";
+        if (idCupom > 0) {
+            return nome + " - desconto de " + desconto + "%";
+        } else {
+            return "Não selecionado";
+        }
     }
 }

@@ -8,18 +8,16 @@
         android:title="Home"/>
 
     <item
-        android:id="@+id/page_atacoes"
-        android:enabled="true"
-        android:icon="@drawable/ferris_wheel"
-        android:title="Atrações"/>
-
-    <item
         android:id="@+id/page_ingressos"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_local_activity_24"
         android:title="Ingressos"/>
 
-
+    <item
+        android:id="@+id/page_atacoes"
+        android:enabled="true"
+        android:icon="@drawable/ferris_wheel"
+        android:title="Atrações"/>
 
     <item
         android:id="@+id/page_options"

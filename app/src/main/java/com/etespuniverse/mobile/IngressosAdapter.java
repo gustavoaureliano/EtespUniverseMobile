@@ -42,6 +42,7 @@ public class IngressosAdapter extends RecyclerView.Adapter<IngressosAdapter.View
             holder.lblInteiro.setText("Meia");
         }
         holder.lblData.setText(ingresso.getDataInicioShow());
+        holder.imgIngresso.setImageBitmap(ingresso.getFoto());
         holder.btnMostrarIngresso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

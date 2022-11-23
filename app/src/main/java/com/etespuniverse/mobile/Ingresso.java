@@ -1,5 +1,7 @@
 package com.etespuniverse.mobile;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,6 +19,7 @@ public class Ingresso implements Serializable {
     private Date dataValidade = new Date();
     private int idEvento = -1;
     private double preco = 0;
+    private Bitmap foto = null;
     private String descricao = "";
     private SimpleDateFormat dateFormatShow = new SimpleDateFormat("dd/MM/yyyy");
     private SimpleDateFormat dateFormatDB = new SimpleDateFormat("yyyy-MM-dd");
@@ -143,6 +146,14 @@ public class Ingresso implements Serializable {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public Bitmap getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Bitmap foto) {
+        this.foto = foto;
     }
 
     public String getDescricao() {

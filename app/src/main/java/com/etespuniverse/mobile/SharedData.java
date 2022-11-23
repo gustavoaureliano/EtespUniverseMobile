@@ -11,6 +11,7 @@ public class SharedData {
     private Context context = null;
     private static Cliente cliente = new Cliente();
     private static ArrayList<Ingresso> ingressos = new ArrayList<>();
+    private static ArrayList<Ingresso> tiposIngressos = new ArrayList<>();
     private static ArrayList<ModelAtracao> atracoes = new ArrayList<>();
     private static ArrayList<Cupom> cupons = new ArrayList<>();
     private static ArrayList<ItemCarrinho> carrinho = new ArrayList<>();
@@ -52,6 +53,14 @@ public class SharedData {
 
     public static void setIngressos(ArrayList<Ingresso> ingressos) {
         SharedData.ingressos = ingressos;
+    }
+
+    public static ArrayList<Ingresso> getTiposIngressos() {
+        return tiposIngressos;
+    }
+
+    public static void setTiposIngressos(ArrayList<Ingresso> tiposIngressos) {
+        SharedData.tiposIngressos = tiposIngressos;
     }
 
     public static ArrayList<ModelAtracao> getAtracoes() {
