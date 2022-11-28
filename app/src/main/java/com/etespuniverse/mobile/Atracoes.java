@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class Atracoes extends Fragment {
     private String apiUrl = SharedData.getApiUrl();
     private RecyclerView rvAtracoes;
     private AtracoesAdapter adapter;
+    private CircularProgressIndicator progressIndicator;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -101,6 +103,7 @@ public class Atracoes extends Fragment {
 
         //cardAtracao = view.findViewById(R.id.card1);
         rvAtracoes = view.findViewById(R.id.rvAtracoes);
+        progressIndicator = view.findViewById(R.id.progressIndicator);
         /*
         cardAtracao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +141,7 @@ public class Atracoes extends Fragment {
         @Override
         protected void onPreExecute() {
             //load = ProgressDialog.show(getContext(), "Por favor Aguarde ...", "Recuperando Informações do Servidor...");
+            progressIndicator.show();
         }
 
         @Override
@@ -170,6 +174,7 @@ public class Atracoes extends Fragment {
             });
             rvAtracoes.setAdapter(adapter);
             //load.dismiss();
+            progressIndicator.hide();
         }
 
     }

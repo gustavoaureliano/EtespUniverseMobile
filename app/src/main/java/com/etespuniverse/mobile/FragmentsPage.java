@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 public class FragmentsPage extends AppCompatActivity {
 

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,8 @@ public class Ingressos extends Fragment {
     private RecyclerView rvIngressos;
     private IngressosAdapter adapter;
     private ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
+    private CircularProgressIndicator progressIndicator;
+    private TextView txtSemIngressos;
 
     private Cliente cliente = SharedData.getCliente();
     private String apiUrl = SharedData.getApiUrl();
@@ -64,6 +68,8 @@ public class Ingressos extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ingressos, container, false);
 
         rvIngressos = view.findViewById(R.id.rvIngressos);
+        progressIndicator = view.findViewById(R.id.progressIndicator);
+        txtSemIngressos = view.findViewById(R.id.txtSemIngressos);
 
         topAppBar = view.findViewById(R.id.topAppBar);
         topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -92,6 +98,7 @@ public class Ingressos extends Fragment {
         @Override
         protected void onPreExecute() {
             //load = ProgressDialog.show(Carrinho.this,"", "");
+            progressIndicator.show();
         }
 
         @Override
@@ -113,39 +120,45 @@ public class Ingressos extends Fragment {
                     ingressosValidos.add(ingreso);
                 }
             }
-            rvIngressos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-            adapter = new IngressosAdapter(getContext(), ingressosValidos);
-            adapter.setOnClickListener(new OnClickIngressoListener() {
-                @Override
-                public void onClick(Ingresso ingresso, int index, ImageView imgIngresso) {
-                    Bitmap bitmap;
-                    QRGEncoder qrgEncoder;
-                    WindowManager manager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-                    Display display = manager.getDefaultDisplay();
-                    Point point = new Point();
-                    display.getSize(point);
-                    int width = point.x;
-                    int height = point.y;
+            progressIndicator.hide();
+            if (ingressosValidos.size() > 0) {
+                txtSemIngressos.setVisibility(View.GONE);
+                rvIngressos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                adapter = new IngressosAdapter(getContext(), ingressosValidos);
+                adapter.setOnClickListener(new OnClickIngressoListener() {
+                    @Override
+                    public void onClick(Ingresso ingresso, int index, ImageView imgIngresso) {
+                        Bitmap bitmap;
+                        QRGEncoder qrgEncoder;
+                        WindowManager manager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                        Display display = manager.getDefaultDisplay();
+                        Point point = new Point();
+                        display.getSize(point);
+                        int width = point.x;
+                        int height = point.y;
 
-                    int dimen = width < height ? width : height;
-                    Log.d("TAG", "X: " + width);
-                    Log.d("TAG", "Y: " + height);
-                    Log.d("TAG", "dimen: " + dimen);
-                    dimen = dimen * 3 / 4;
-                    Log.d("TAG", "dimen (3/4): " + dimen);
-                    qrgEncoder = new QRGEncoder(String.valueOf(ingresso.getIdIngresso()), null, QRGContents.Type.TEXT, dimen);
-                    try {
-                        bitmap = qrgEncoder.getBitmap();
-                        //imgIngresso.setImageBitmap(bitmap);
-                        QrCodeDialog dialog = new QrCodeDialog(ingresso, bitmap);
-                        dialog.show(getParentFragmentManager(), dialog.getTag());
-                    } catch (Exception e) {
-                        Log.d("TAG", "Error: " + e.getMessage());
-                        //Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        int dimen = width < height ? width : height;
+                        Log.d("TAG", "X: " + width);
+                        Log.d("TAG", "Y: " + height);
+                        Log.d("TAG", "dimen: " + dimen);
+                        dimen = dimen * 3 / 4;
+                        Log.d("TAG", "dimen (3/4): " + dimen);
+                        qrgEncoder = new QRGEncoder(String.valueOf(ingresso.getIdIngresso()), null, QRGContents.Type.TEXT, dimen);
+                        try {
+                            bitmap = qrgEncoder.getBitmap();
+                            //imgIngresso.setImageBitmap(bitmap);
+                            QrCodeDialog dialog = new QrCodeDialog(ingresso, bitmap);
+                            dialog.show(getParentFragmentManager(), dialog.getTag());
+                        } catch (Exception e) {
+                            Log.d("TAG", "Error: " + e.getMessage());
+                            //Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
-            rvIngressos.setAdapter(adapter);
+                });
+                rvIngressos.setAdapter(adapter);
+            } else {
+                txtSemIngressos.setVisibility(View.VISIBLE);
+            }
 
         }
 
